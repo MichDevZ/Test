@@ -6,7 +6,7 @@ import { proxiesInfo } from '../api/interface/proxiesInfo';
 
 
 
-const page = () => {
+const DashboardPage = () => {
 
     const [userOrIP, setUserOrIp] = useState<string >('User');
     const [httpOrSocks5, setHttpOrSocks5] = useState<string >('Http');
@@ -268,4 +268,4 @@ const page = () => {
   )
 }
 
-export default page
+export default DashboardPage

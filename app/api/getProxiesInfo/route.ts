@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function GET(req: Request) {
+export async function GET() {
 
     const apiKey = '65ytl2m8te5r82y2a6u866x85del551p'
     const planId = '6701ad75555cd2019306c5f3'

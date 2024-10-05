@@ -4,7 +4,7 @@ import SideBar from '../components/SideBar'
 import { unlimitedPlan } from '../api/uplimitedPlan/uplimitedPlans';
 import { bandwidthPlan } from '../api/bandwidthPlan/bandwidth';
 
-const page = () => {
+const PurchasePage = () => {
 
     const [selectedPlan, setSelectedPlan] = useState<string>('');
     const [selectedDays, setselectedDays] = useState<number>(0);
@@ -123,4 +123,4 @@ const page = () => {
   )
 }
 
-export default page
+export default PurchasePage
