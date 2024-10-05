@@ -2,20 +2,36 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from '../components/SideBar'
 import { getProxiesInfo } from '../api/getProxiesInfo/getProxiesInfo';
-import { proxiesInfo } from '../api/interface/proxiesInfo';
+import { proxiesInfo, proxiesInfo2 } from '../api/interface/proxiesInfo';
+import { getProxiesInfo2 } from '../api/getProxiesInfo2/getProxiesInfo2';
 
 
 
 const DashboardPage = () => {
 
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',     
+        month: 'short',      
+        day: 'numeric',      
+        hour: '2-digit',     
+        minute: '2-digit',   
+        hour12: false,       
+      };
+
     const [userOrIP, setUserOrIp] = useState<string >('User');
     const [httpOrSocks5, setHttpOrSocks5] = useState<string >('Http');
     const [proxiesInfo, setProxiesInfo] = useState<proxiesInfo | undefined>();
+    const [proxiesInfo2, setProxiesInfo2] = useState<proxiesInfo2 | undefined>();
+
+    const dateStr = proxiesInfo2?.expiration_date
+    const date = new Date(dateStr!); 
     
+    const formattedDate = date.toLocaleString('en-US', options);
  
 
     useEffect(() => {
         const data = getProxiesInfo(setProxiesInfo)
+        const data2 = getProxiesInfo2(setProxiesInfo2)
     }, [])
     
     const handleUserOrIp = (UserOrIp: string) => {
@@ -26,9 +42,9 @@ const DashboardPage = () => {
     <>
     <SideBar />
     <div className="p-4 sm:ml-64">
-   <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+   <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg">
       <div className="grid grid-cols-4 gap-10  mb-4">
-      <div className="flex justify-between p-3 w-[400px] items-center h-32 rounded bg-gray-50 dark:bg-gray-800">
+      <div className="flex justify-between p-3 w-[400px] items-center h-32 rounded bg-gray-50 ">
     <div>
         <div className='inline-flex p-1 mb-4 rounded bg-blue-500 text-white'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -47,7 +63,7 @@ const DashboardPage = () => {
         </div>
 
 
-        <div className="flex justify-between p-3 w-[400px] items-center h-32 rounded bg-gray-50 dark:bg-gray-800">
+        <div className="flex justify-between p-3 w-[400px] items-center h-32 rounded bg-gray-50 ">
     <div>
         <div className='inline-flex p-1 mb-4 rounded bg-blue-500 text-white'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -56,7 +72,7 @@ const DashboardPage = () => {
 
         </div>
         <h4 className='text-xs text-gray-400'>Plan Expiry</h4>
-        <h1 className='font-bold'>Oct 16, 2024 18:56</h1>
+        <h1 className='font-bold'>{formattedDate}</h1>
     </div>
 
     <div className='flex'>
@@ -67,7 +83,7 @@ const DashboardPage = () => {
             </div>
         </div>
 
-        <div className="flex p-3 w-[700px] items-center h-32 rounded bg-gray-50 dark:bg-gray-800">
+        <div className="flex p-3 w-[700px] items-center h-32 rounded bg-gray-50 ">
             <div className='border-r-2 border-blue-600 pr-14'>
                 <div className='inline-flex p-1 mb-4 rounded bg-blue-500 text-white'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -88,7 +104,8 @@ const DashboardPage = () => {
                 </div>
                 </div>
             </div>
-            <svg className='absolute top-0 left-0' xmlns='http://www.w3.org/2000/svg' version='1.1'
+            <svg className='absolute top-0 left-0' 
+            xmlns='http://www.w3.org/2000/svg' version='1.1'
             width='100px' height='100px'>
                 <defs>
                 <linearGradient id='GradientColor'>
@@ -146,7 +163,7 @@ const DashboardPage = () => {
 
 
       <div className="grid grid-cols-2 gap-4 mb-4">
-         <div className="rounded bg-gray-50 h-96 dark:bg-gray-800">
+         <div className="rounded bg-gray-50 h-96">
             <div className='w-full align-top'>
                 <ul className='flex gap-10  border-b-2 p-3'>
                     <li>
@@ -195,7 +212,7 @@ const DashboardPage = () => {
 
 
 
-         <div className="rounded bg-gray-50 h-auto dark:bg-gray-800">
+         <div className="rounded bg-gray-50 h-auto ">
             <div className='w-full align-top'>
                 <ul className='flex gap-10  border-b-2 p-3'>
                     <li>

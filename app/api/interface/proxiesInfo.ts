@@ -7,3 +7,10 @@ export interface proxiesInfo{
     },
     white_list: []
 }
+
+export interface proxiesInfo2{
+    whitelist: [],
+    expiration_date: string,
+    created_date: string,
+    time_left: string;
+}
