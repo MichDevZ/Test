@@ -8,7 +8,6 @@ export const AddOrRemoveGB = async  (action: string, GB: number)  => {
                 GB: GB
         });
 
-        console.log(data)
 
         return data
         

@@ -46,9 +46,9 @@ const DashboardPage = () => {
  
 
     useEffect(() => {
-        const data = getProxiesInfo(setProxiesInfo)
-        const data2 = getProxiesInfo2(setProxiesInfo2)
-        const countrys = getCountrys(setCountrys)
+        getProxiesInfo(setProxiesInfo)
+         getProxiesInfo2(setProxiesInfo2)
+         getCountrys(setCountrys)
     }, [])
     
     const handleUserOrIp = (UserOrIp: string) => {
@@ -56,6 +56,12 @@ const DashboardPage = () => {
     }
 
     const handleStickyValue = (value: number) => {
+
+        if(value === 0) {
+            setStickyValue(1)
+            return
+        }
+
         if (stickyTimeValue === 1 && value > 86400) return;
 
         if (stickyTimeValue === 60 && value > 1440) return;
@@ -68,11 +74,12 @@ const DashboardPage = () => {
     }
 
 
+
     const handleGbAdd = () => {
 
         AddOrRemoveGB('add', gbValue)
+        getProxiesInfo(setProxiesInfo)
         location.reload();
-
     }
 
     const usedPercentage  = (proxiesInfo?.proxies.bandwidthLeft! / proxiesInfo?.proxies.bandwidth!) * 100 ; // Percentage used
@@ -285,7 +292,7 @@ const DashboardPage = () => {
                 <div>
                     <p className='text-xs mb-1 text-gray-400'>Host</p>
                          <div className='flex flex-grow w-[300px]'>
-                            <input type="text" value={'ipv6.lightningproxies.net'} className="flex-grow p-1 border-none outline-none w-72 h-7" />
+                            <input type="text" defaultValue={'ipv6.lightningproxies.net'} className="flex-grow p-1 border-none outline-none w-72 h-7" />
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 text-blue-500 absolute ml-[270px] my-0.5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
@@ -294,7 +301,7 @@ const DashboardPage = () => {
 
                 <div className='-ml-16'>
                     <p className='text-xs mb-1 text-gray-400'>Port (HTTP & SOCKS5)</p>
-                    <input type="text" value={httpOrSocks5 === 'Http' ? 1001 : 999} className="flex-grow p-1 border-none outline-none w-72 h-7" />
+                    <input type="text" defaultValue={httpOrSocks5 === 'Http' ? 1001 : 999} className="flex-grow p-1 border-none outline-none w-72 h-7" />
                         <button 
                         onClick={() => setHttpOrSocks5('Http')}
                         className={httpOrSocks5 === 'Http' ? 'text-sm mr-1 px-2 py-1 bg-blue-500 text-white' : 'text-sm mr-1 px-2 border border-blue-500'}>HTTP</button>
@@ -306,6 +313,7 @@ const DashboardPage = () => {
                 <div className='col-span-2'>
                     <p className='text-xs mb-1 my-6 text-gray-400'>Rorating Proxy</p>
                     <input type="text" 
+                    onChange={(e) => e.target.value}
                     value={`ipv6.lightningproxies.net:${httpOrSocks5 === 'Http' ? 1001 : 999}:${proxiesInfo?.proxies.username}:${proxiesInfo?.proxies.password}`} 
                      className="w-full p-1 border-none outline-none h-7" />
                 </div>
