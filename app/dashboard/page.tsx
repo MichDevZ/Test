@@ -186,7 +186,7 @@ const DashboardPage = () => {
 
   </div>
 
-        <div className='md:ml-10 my-5 md:my-0 ml-24 '>
+        <div className='md:ml-10 my-5 md:my-0 ml-10 '>
             <div className='flex mb-2 items-center'>
                 <div className='border bg-white rounded-full p-1 mr-2'></div>
                 <p className='text-xs text-gray-500'>Used Bandwidth</p>
@@ -208,7 +208,7 @@ const DashboardPage = () => {
             <div className='flex md:block gap-x-5 my-6 md:my-0'>
             <p className='text-sm mb-1 font-bold text-nowrap md:-ml-0 -ml-6'>Add Bandwidth</p>
             <input type="number" defaultValue={gbValue} onChange={(e) => setGbValue(Number(e.target.value))} className="flex-grow p-1 border-none outline-none w-20 h-6" />
-            <span className="ml-2 text-blue-600 font-bold">GB</span>
+            <span className="md:ml-2 text-blue-600 font-bold">GB</span>
             </div>
 
             <button onClick={handleGbAdd} className='text-white text-nowrap text-sm bg-blue-500 ml-14 px-4 py-1 rounded-full'>{'Add >'}</button>
@@ -306,7 +306,7 @@ const DashboardPage = () => {
 
                 <div className='md:-ml-16  md:block' >
                     <p className='text-xs mb-1 text-gray-400'>Port (HTTP & SOCKS5)</p>
-                    <input type="text" defaultValue={httpOrSocks5 === 'Http' ? 1001 : 999} className="flex-grow p-1 border-none outline-none md:w-72 h-7" />
+                    <input type="text" defaultValue={httpOrSocks5 === 'Http' ? 1001 : 999} className="flex-grow p-1 border-none outline-none w-32 md:w-72 h-7" />
                         <button 
                         onClick={() => setHttpOrSocks5('Http')}
                         className={httpOrSocks5 === 'Http' ? 'text-sm mr-1 px-2 py-1 bg-blue-500 text-white' : 'text-sm mr-1 px-2 border border-blue-500'}>HTTP</button>
