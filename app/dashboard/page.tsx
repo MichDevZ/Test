@@ -7,7 +7,6 @@ import { getProxiesInfo2 } from '../api/getProxiesInfo2/getProxiesInfo2';
 import { getCountrys } from '../api/getCountrys/getCountry';
 import { AddOrRemoveGB } from '../api/AddOrRemoveGB/AddOrRemoveGB';
 import { generateRandomCode } from '../utils/generateRandom';
-import { revalidate } from '../utils/useServer';
 
 
 
@@ -32,7 +31,6 @@ const DashboardPage = () => {
     const [stickyValue, setStickyValue] = useState<number>(1);
     const [stickyTimeValue, setStickyTimeValue] = useState<number>(1);
     const [stickyCount, setStickyCount] = useState<number>(2000);
-    const [triggerEffect, setTriggerEffect] = useState(0); 
     const content = []
     
     const timesValues = {
@@ -55,7 +53,7 @@ const DashboardPage = () => {
 
         }
          fecthData();
-    }, [triggerEffect])
+    }, [])
     
     const handleUserOrIp = (UserOrIp: string) => {
         setUserOrIp(UserOrIp)
@@ -83,8 +81,6 @@ const DashboardPage = () => {
 
     const handleGbAdd = () => {
         AddOrRemoveGB('add', gbValue)
-        setTriggerEffect(prev => prev + 1);
-        revalidate;
         location.reload();
     }
 

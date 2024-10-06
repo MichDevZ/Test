@@ -10,6 +10,8 @@ interface proxiesInfo{
     white_list: []
 }
 
+export const dynamic = true;
+
 export const getProxiesInfo = async  (handleRequest: React.Dispatch<React.SetStateAction<proxiesInfo | undefined>>): Promise<proxiesInfo | undefined> => {
 
     try {
