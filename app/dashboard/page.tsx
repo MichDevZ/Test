@@ -47,9 +47,13 @@ const DashboardPage = () => {
  
 
     useEffect(() => {
-        getProxiesInfo(setProxiesInfo)
-         getProxiesInfo2(setProxiesInfo2)
-         getCountrys(setCountrys)
+        const fecthData = async () => {
+            await getProxiesInfo(setProxiesInfo)
+             await getProxiesInfo2(setProxiesInfo2)
+             await getCountrys(setCountrys)
+
+        }
+         fecthData();
     }, [triggerEffect])
     
     const handleUserOrIp = (UserOrIp: string) => {
