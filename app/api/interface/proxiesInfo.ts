@@ -14,3 +14,15 @@ export interface proxiesInfo2{
     created_date: string,
     time_left: string;
 }
+
+
+export interface ICountry {
+    id: number;
+    country_name: string;
+    country_code: string;
+    is_main: number
+}
+
+export interface ICountry2 {
+    country_list: ICountry[]
+}

@@ -45,6 +45,6 @@ circle {
   fill: none;
   stroke: url(#GradientColor);
   stroke-width: 18.5px;
-  stroke-dasharray: 250;
-  stroke-dashoffset: 50;
+  stroke-dasharray: 255;
 }
+

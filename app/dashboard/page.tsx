@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from '../components/SideBar'
 import { getProxiesInfo } from '../api/getProxiesInfo/getProxiesInfo';
-import { proxiesInfo, proxiesInfo2 } from '../api/interface/proxiesInfo';
+import { ICountry2, proxiesInfo, proxiesInfo2 } from '../api/interface/proxiesInfo';
 import { getProxiesInfo2 } from '../api/getProxiesInfo2/getProxiesInfo2';
+import { getCountrys } from '../api/getCountrys/getCountry';
 
 
 
@@ -22,6 +23,7 @@ const DashboardPage = () => {
     const [httpOrSocks5, setHttpOrSocks5] = useState<string >('Http');
     const [proxiesInfo, setProxiesInfo] = useState<proxiesInfo | undefined>();
     const [proxiesInfo2, setProxiesInfo2] = useState<proxiesInfo2 | undefined>();
+    const [countrys, setCountrys] = useState<ICountry2 | undefined>();
 
     const dateStr = proxiesInfo2?.expiration_date
     const date = new Date(dateStr!); 
@@ -32,11 +34,16 @@ const DashboardPage = () => {
     useEffect(() => {
         const data = getProxiesInfo(setProxiesInfo)
         const data2 = getProxiesInfo2(setProxiesInfo2)
+        const countrys = getCountrys(setCountrys)
     }, [])
     
     const handleUserOrIp = (UserOrIp: string) => {
         setUserOrIp(UserOrIp)
     }
+
+    const usedPercentage  = (proxiesInfo?.proxies.bandwidthLeft! / proxiesInfo?.proxies.bandwidth!) * 100 ; // Percentage used
+
+    console.log(countrys)
 
   return (
     <>
@@ -95,28 +102,27 @@ const DashboardPage = () => {
             </div>
 
          <div>
-            <div className='ml-10 w-[100px] h-[100px] relative '>
-            <div className='w-[100px] p-[14px] h-[100px] border rounded-full outer '>
-                <div className='w-[70px] h-[70px] border 
-                rounded-full flex items-center justify-center inner '>
-                <div className='font-[#555] font-bold'>
-                    92%
+            <div className='ml-10 w-[100px] h-[100px] relative'>
+                <div className='w-[100px] p-[14px] h-[100px] border rounded-full outer'>
+                    <div className='w-[70px] h-[70px] border rounded-full flex items-center justify-center inner'>
+                        <div className='font-[#555] font-bold'>
+                            {Math.round(usedPercentage)}%
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div>
-            <svg className='absolute top-0 left-0' 
-            xmlns='http://www.w3.org/2000/svg' version='1.1'
-            width='100px' height='100px'>
-                <defs>
-                <linearGradient id='GradientColor'>
-                    <stop offset='100%' stopColor='#60A5FA'/> 
-                </linearGradient>
-                </defs>
-                <circle cx='50' cy='50' r='40' stroke='#60A5FA' strokeWidth='10' fill='none'/>
+                <svg className='absolute top-0 left-0'
+                    xmlns='http://www.w3.org/2000/svg' version='1.1'
+                    width='100px' height='100px'>
+                    <defs>
+                        <linearGradient id='GradientColor'>
+                            <stop offset='100%' stopColor='#60A5FA' />
+                        </linearGradient>
+                    </defs>
+                    <circle cx='50' cy='50' r='40' stroke='#60A5FA' strokeWidth='10' fill='none' strokeDashoffset={usedPercentage ? 251.2 - (usedPercentage / 100) * 251.2 : 0} />
 
-                <circle cx='50' cy='50' r='40' stroke='url(#GradientColor)' strokeWidth='10' fill='none' strokeDasharray="251.2" strokeDashoffset="20"/>
-            </svg>
-        </div>
+                    <circle cx='50' cy='50' r='40' stroke='url(#GradientColor)' strokeWidth='10' fill='none'strokeDashoffset={usedPercentage ? 251.2 - (usedPercentage / 100) * 251.2 : 0} />
+                </svg>
+            </div>
 
   </div>
 
@@ -195,7 +201,11 @@ const DashboardPage = () => {
 
                 <div>
                     <p className='text-xs mb-1 my-6 text-gray-400'>Country</p>
-                    <input type="text"  className="flex-grow p-1 border-none outline-none w-72 h-6" />
+                    <select name="" id="">
+                        {countrys?.country_list.map(country => (
+                            <option key={country.country_code} value={country.country_code}>{country.country_name}</option>
+                        ))}
+                    </select>
                 </div>
 
 
