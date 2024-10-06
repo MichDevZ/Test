@@ -5,6 +5,9 @@ import { getProxiesInfo } from '../api/getProxiesInfo/getProxiesInfo';
 import { ICountry2, proxiesInfo, proxiesInfo2 } from '../api/interface/proxiesInfo';
 import { getProxiesInfo2 } from '../api/getProxiesInfo2/getProxiesInfo2';
 import { getCountrys } from '../api/getCountrys/getCountry';
+import { AddOrRemoveGB } from '../api/AddOrRemoveGB/AddOrRemoveGB';
+import { generateRandomCode } from '../utils/generateRandom';
+
 
 
 
@@ -21,9 +24,20 @@ const DashboardPage = () => {
 
     const [userOrIP, setUserOrIp] = useState<string >('User');
     const [httpOrSocks5, setHttpOrSocks5] = useState<string >('Http');
-    const [proxiesInfo, setProxiesInfo] = useState<proxiesInfo | undefined>();
-    const [proxiesInfo2, setProxiesInfo2] = useState<proxiesInfo2 | undefined>();
-    const [countrys, setCountrys] = useState<ICountry2 | undefined>();
+    const [proxiesInfo, setProxiesInfo] = useState<proxiesInfo>();
+    const [proxiesInfo2, setProxiesInfo2] = useState<proxiesInfo2 >();
+    const [countrys, setCountrys] = useState<ICountry2 >();
+    const [gbValue, setGbValue] = useState<number>(0)
+    const [stickyValue, setStickyValue] = useState<number>(1);
+    const [stickyTimeValue, setStickyTimeValue] = useState<number>(1);
+    const [stickyCount, setStickyCount] = useState<number>(2000);
+    const content = []
+    
+    const timesValues = {
+        seconds: 1,
+        minutes: 60,
+        hours: 3600
+    }
 
     const dateStr = proxiesInfo2?.expiration_date
     const date = new Date(dateStr!); 
@@ -41,9 +55,45 @@ const DashboardPage = () => {
         setUserOrIp(UserOrIp)
     }
 
+    const handleStickyValue = (value: number) => {
+        if (stickyTimeValue === 1 && value > 86400) return;
+
+        if (stickyTimeValue === 60 && value > 1440) return;
+
+        if (stickyTimeValue === 3600 && value > 24) return;
+
+        setStickyValue(value)
+        
+
+    }
+
+
+    const handleGbAdd = () => {
+
+        AddOrRemoveGB('add', gbValue)
+        location.reload();
+
+    }
+
     const usedPercentage  = (proxiesInfo?.proxies.bandwidthLeft! / proxiesInfo?.proxies.bandwidth!) * 100 ; // Percentage used
 
-    console.log(countrys)
+    for (let i = 0; i < stickyCount; i++) {
+        const uniqueSession = generateRandomCode(10)
+        content.push(`ipv6.lightningproxies.net:${httpOrSocks5 === 'Http' ? 1001 : 999}:${proxiesInfo?.proxies.username}-session-${uniqueSession}-time-${stickyTimeValue! * stickyValue}-package-ipv6:${proxiesInfo?.proxies.password}`);
+    }
+
+    if (!proxiesInfo && !proxiesInfo2) {
+        return (
+            <>
+            <SideBar />
+            <div className='p-4 sm:ml-64'>
+                <h1>..Cargando</h1>
+            </div>
+            </>
+
+        ) 
+        
+    } 
 
   return (
     <>
@@ -131,7 +181,7 @@ const DashboardPage = () => {
                 <div className='border bg-white rounded-full p-1 mr-2'></div>
                 <p className='text-xs text-gray-500'>Used Bandwidth</p>
                 {proxiesInfo && (
-                    <p className='ml-20'>{proxiesInfo?.proxies.bandwidthLeft! - proxiesInfo?.proxies.bandwidth!}</p>
+                    <p className='ml-20'>{( proxiesInfo?.proxies.bandwidth! - proxiesInfo?.proxies.bandwidthLeft!).toFixed(1)}</p>
                 )}
                 
             </div>
@@ -140,16 +190,16 @@ const DashboardPage = () => {
             <div className='border bg-[#60A5FA] rounded-full p-1 mr-2'></div>
                 <p className='text-xs text-gray-500'>Remaining Bandwidth</p>
                 {proxiesInfo && (
-                    <p className='ml-12'>{proxiesInfo?.proxies.bandwidthLeft!}</p>
+                    <p className='ml-12'>{proxiesInfo?.proxies.bandwidthLeft!.toFixed(1)}</p>
                 )}
             </div>
 
         <div className='my-2 ml-4'>
             <p className='text-sm mb-1 font-bold'>Add Bandwidth</p>
-            <input type="number" defaultValue={0} className="flex-grow p-1 border-none outline-none w-20 h-6" />
+            <input type="number" defaultValue={gbValue} onChange={(e) => setGbValue(Number(e.target.value))} className="flex-grow p-1 border-none outline-none w-20 h-6" />
             <span className="ml-2 text-blue-600 font-bold">GB</span>
 
-            <button className='text-white text-sm bg-blue-500 ml-14 px-4 py-1 rounded-full'>{'Add >'}</button>
+            <button onClick={handleGbAdd} className='text-white text-sm bg-blue-500 ml-14 px-4 py-1 rounded-full'>{'Add >'}</button>
         </div>
 
         </div>
@@ -200,8 +250,8 @@ const DashboardPage = () => {
                 </div>
 
                 <div>
-                    <p className='text-xs mb-1 my-6 text-gray-400'>Country</p>
-                    <select name="" id="">
+                    <p className='text-xs overflow-visible mb-1 my-6 text-gray-400'>Country</p>
+                    <select className='absolute z-[1]' name="" id="">
                         {countrys?.country_list.map(country => (
                             <option key={country.country_code} value={country.country_code}>{country.country_name}</option>
                         ))}
@@ -235,7 +285,7 @@ const DashboardPage = () => {
                 <div>
                     <p className='text-xs mb-1 text-gray-400'>Host</p>
                          <div className='flex flex-grow w-[300px]'>
-                            <input type="text"  className="flex-grow p-1 border-none outline-none w-72 h-7" />
+                            <input type="text" value={'ipv6.lightningproxies.net'} className="flex-grow p-1 border-none outline-none w-72 h-7" />
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 text-blue-500 absolute ml-[270px] my-0.5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
@@ -244,7 +294,7 @@ const DashboardPage = () => {
 
                 <div className='-ml-16'>
                     <p className='text-xs mb-1 text-gray-400'>Port (HTTP & SOCKS5)</p>
-                    <input type="text"  className="flex-grow p-1 border-none outline-none w-72 h-7" />
+                    <input type="text" value={httpOrSocks5 === 'Http' ? 1001 : 999} className="flex-grow p-1 border-none outline-none w-72 h-7" />
                         <button 
                         onClick={() => setHttpOrSocks5('Http')}
                         className={httpOrSocks5 === 'Http' ? 'text-sm mr-1 px-2 py-1 bg-blue-500 text-white' : 'text-sm mr-1 px-2 border border-blue-500'}>HTTP</button>
@@ -255,13 +305,19 @@ const DashboardPage = () => {
 
                 <div className='col-span-2'>
                     <p className='text-xs mb-1 my-6 text-gray-400'>Rorating Proxy</p>
-                    <input type="text"  className="w-full p-1 border-none outline-none h-7" />
+                    <input type="text" 
+                    value={`ipv6.lightningproxies.net:${httpOrSocks5 === 'Http' ? 1001 : 999}:${proxiesInfo?.proxies.username}:${proxiesInfo?.proxies.password}`} 
+                     className="w-full p-1 border-none outline-none h-7" />
                 </div>
 
                 <div className='col-span-2'>
                     <p className='text-xs mb-2 my-6'>Sticky Sessions (Session time: 1 sec)</p>
-                    <input type="text"  defaultValue='Seconds' className="mb-2 w-full p-1 border-none outline-none h-7" />
-                    <input type="text"  defaultValue='1' className="w-full p-1 border-none outline-none h-7" />
+                    <select className='w-full p-1 mb-2' onChange={(e) => setStickyTimeValue(Number(e.target.value)) } name="" id="">
+                        <option value={timesValues.seconds}>Seconds</option>
+                        <option value={timesValues.minutes}>Minutes</option>
+                        <option value={timesValues.hours}>Hours</option>
+                    </select>
+                    <input type="text"  value={stickyValue} onChange={(e) => handleStickyValue(Number(e.target.value))} className="w-full p-1 border-none outline-none h-7" />
                 </div>
 
 
@@ -277,12 +333,16 @@ const DashboardPage = () => {
 
                 <div className='flex items-center'>
                     <h2 className='text-nowrap mr-1'>Sticky Count: </h2>
-                    <input type="text"  defaultValue='2000' className="w-full p-1 border-none outline-none h-7" />
+                    <input type="text"  value={stickyCount} onChange={(e) => setStickyCount(Number(e.target.value))} className="w-full p-1 border-none outline-none h-7" />
                 </div>
             </div>
 
             <div className='p-3'>
-                <textarea name="" id="" className='w-full h-72'></textarea>
+                <div className='w-full h-72 border overflow-scroll text-nowrap'>
+                    {content.map(c => (
+                        <p>{c}</p>
+                    ))}
+                </div>
             </div>
 
           </div>
