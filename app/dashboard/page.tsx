@@ -49,7 +49,7 @@ const DashboardPage = () => {
         getProxiesInfo(setProxiesInfo)
          getProxiesInfo2(setProxiesInfo2)
          getCountrys(setCountrys)
-    })
+    }, [])
     
     const handleUserOrIp = (UserOrIp: string) => {
         setUserOrIp(UserOrIp)
