@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
  
  
  export function generateRandomCode(length: number) {
@@ -9,3 +11,4 @@
     }
     return result;
 }
+

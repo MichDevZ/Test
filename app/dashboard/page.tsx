@@ -7,6 +7,7 @@ import { getProxiesInfo2 } from '../api/getProxiesInfo2/getProxiesInfo2';
 import { getCountrys } from '../api/getCountrys/getCountry';
 import { AddOrRemoveGB } from '../api/AddOrRemoveGB/AddOrRemoveGB';
 import { generateRandomCode } from '../utils/generateRandom';
+import { revalidate } from '../utils/useServer';
 
 
 
@@ -81,9 +82,9 @@ const DashboardPage = () => {
 
 
     const handleGbAdd = () => {
-
         AddOrRemoveGB('add', gbValue)
         setTriggerEffect(prev => prev + 1);
+        revalidate;
         location.reload();
     }
 
