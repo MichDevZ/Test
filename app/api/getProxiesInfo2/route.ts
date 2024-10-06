@@ -1,5 +1,8 @@
 import axios from "axios";
 
+
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
 
     const apiKey = '65ytl2m8te5r82y2a6u866x85del551p'

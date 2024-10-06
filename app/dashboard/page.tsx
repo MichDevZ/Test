@@ -109,8 +109,9 @@ const DashboardPage = () => {
     <SideBar />
     <div className="p-4 sm:ml-64">
    <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg">
-      <div className="grid grid-cols-4 gap-10  mb-4">
-      <div className="flex justify-between p-3 w-[400px] items-center h-32 rounded bg-gray-50 ">
+      <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-10  mb-4">
+
+      <div className="flex justify-between p-3  md:w-[400px] items-center h-32 rounded bg-gray-50 ">
     <div>
         <div className='inline-flex p-1 mb-4 rounded bg-blue-500 text-white'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -129,7 +130,7 @@ const DashboardPage = () => {
         </div>
 
 
-        <div className="flex justify-between p-3 w-[400px] items-center h-32 rounded bg-gray-50 ">
+        <div className="flex justify-between p-3 md:w-[400px] items-center h-32 rounded bg-gray-50 ">
     <div>
         <div className='inline-flex p-1 mb-4 rounded bg-blue-500 text-white'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -149,7 +150,7 @@ const DashboardPage = () => {
             </div>
         </div>
 
-        <div className="flex p-3 w-[700px] items-center h-32 rounded bg-gray-50 ">
+        <div className="md:flex grid grid-cols-2  p-3 md:w-[700px] items-center h-auto md:h-32 rounded bg-gray-50 ">
             <div className='border-r-2 border-blue-600 pr-14'>
                 <div className='inline-flex p-1 mb-4 rounded bg-blue-500 text-white'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -185,7 +186,7 @@ const DashboardPage = () => {
 
   </div>
 
-        <div className='ml-10 '>
+        <div className='md:ml-10 my-5 md:my-0 ml-24 '>
             <div className='flex mb-2 items-center'>
                 <div className='border bg-white rounded-full p-1 mr-2'></div>
                 <p className='text-xs text-gray-500'>Used Bandwidth</p>
@@ -204,11 +205,13 @@ const DashboardPage = () => {
             </div>
 
         <div className='my-2 ml-4'>
-            <p className='text-sm mb-1 font-bold'>Add Bandwidth</p>
+            <div className='flex md:block gap-x-5 my-6 md:my-0'>
+            <p className='text-sm mb-1 font-bold text-nowrap md:-ml-0 -ml-6'>Add Bandwidth</p>
             <input type="number" defaultValue={gbValue} onChange={(e) => setGbValue(Number(e.target.value))} className="flex-grow p-1 border-none outline-none w-20 h-6" />
             <span className="ml-2 text-blue-600 font-bold">GB</span>
+            </div>
 
-            <button onClick={handleGbAdd} className='text-white text-sm bg-blue-500 ml-14 px-4 py-1 rounded-full'>{'Add >'}</button>
+            <button onClick={handleGbAdd} className='text-white text-nowrap text-sm bg-blue-500 ml-14 px-4 py-1 rounded-full'>{'Add >'}</button>
         </div>
 
         </div>
@@ -227,7 +230,7 @@ const DashboardPage = () => {
 
 
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
          <div className="rounded bg-gray-50 h-96">
             <div className='w-full align-top'>
                 <ul className='flex gap-10  border-b-2 p-3'>
@@ -242,7 +245,7 @@ const DashboardPage = () => {
                 </ul>
             </div>
 
-            <div className='grid grid-cols-2 gap-x-20 my-10 px-5'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-x-20 my-5 md:my-10 px-5'>
                 <div>
                     <p className='text-xs mb-1 text-gray-400'>Username</p>
                          <div className='flex flex-grow w-[300px]'>
@@ -290,8 +293,8 @@ const DashboardPage = () => {
                 </ul>
             </div>
 
-            <div className='grid grid-cols-2 gap-x-1 my-10 px-5'>
-                <div>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-x-1 my-5 md:my-10 px-5'>
+                <div className='mb-5 md:mb-0'>
                     <p className='text-xs mb-1 text-gray-400'>Host</p>
                          <div className='flex flex-grow w-[300px]'>
                             <input type="text" defaultValue={'ipv6.lightningproxies.net'} className="flex-grow p-1 border-none outline-none w-72 h-7" />
@@ -301,9 +304,9 @@ const DashboardPage = () => {
                       </div>
                 </div>
 
-                <div className='-ml-16'>
+                <div className='md:-ml-16  md:block' >
                     <p className='text-xs mb-1 text-gray-400'>Port (HTTP & SOCKS5)</p>
-                    <input type="text" defaultValue={httpOrSocks5 === 'Http' ? 1001 : 999} className="flex-grow p-1 border-none outline-none w-72 h-7" />
+                    <input type="text" defaultValue={httpOrSocks5 === 'Http' ? 1001 : 999} className="flex-grow p-1 border-none outline-none md:w-72 h-7" />
                         <button 
                         onClick={() => setHttpOrSocks5('Http')}
                         className={httpOrSocks5 === 'Http' ? 'text-sm mr-1 px-2 py-1 bg-blue-500 text-white' : 'text-sm mr-1 px-2 border border-blue-500'}>HTTP</button>
@@ -312,7 +315,7 @@ const DashboardPage = () => {
                         className={httpOrSocks5 === 'Socks5' ? 'text-sm mr-1 px-2 py-1 bg-blue-500 text-white' : 'text-sm mr-1 px-2 py-1 border border-blue-500'}>SOCKS5</button>
                 </div>
 
-                <div className='col-span-2'>
+                <div className='md:col-span-2'>
                     <p className='text-xs mb-1 my-6 text-gray-400'>Rorating Proxy</p>
                     <input type="text" 
                     onChange={(e) => e.target.value}
@@ -320,7 +323,7 @@ const DashboardPage = () => {
                      className="w-full p-1 border-none outline-none h-7" />
                 </div>
 
-                <div className='col-span-2'>
+                <div className='md:col-span-2'>
                     <p className='text-xs mb-2 my-6'>Sticky Sessions (Session time: 1 sec)</p>
                     <select className='w-full p-1 mb-2' onChange={(e) => setStickyTimeValue(Number(e.target.value)) } name="" id="">
                         <option value={timesValues.seconds}>Seconds</option>
@@ -333,10 +336,11 @@ const DashboardPage = () => {
 
             </div>
 
-            <div className='flex justify-between p-5'>
-                <div className='flex'>
+            <div className='md:flex justify-between p-5'>
+                <div className='flex text-nowrap mb-3 md:mb-0'>
                     <h2>Proxy Formart Settings:</h2>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ml-1 text-blue-500 font-bold">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" 
+                    className="size-6 md:ml-1 text-blue-500 font-bold">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                         </svg>
                 </div>
