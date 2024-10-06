@@ -340,7 +340,7 @@ const DashboardPage = () => {
             <div className='p-3'>
                 <div className='w-full h-72 border overflow-scroll text-nowrap'>
                     {content.map(c => (
-                        <p>{c}</p>
+                        <p key={c}>{c}</p>
                     ))}
                 </div>
             </div>
