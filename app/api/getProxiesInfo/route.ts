@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const dynamic = true;
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
 
