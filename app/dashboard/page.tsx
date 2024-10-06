@@ -49,7 +49,7 @@ const DashboardPage = () => {
         getProxiesInfo(setProxiesInfo)
          getProxiesInfo2(setProxiesInfo2)
          getCountrys(setCountrys)
-    }, [])
+    })
     
     const handleUserOrIp = (UserOrIp: string) => {
         setUserOrIp(UserOrIp)
@@ -78,7 +78,6 @@ const DashboardPage = () => {
     const handleGbAdd = () => {
 
         AddOrRemoveGB('add', gbValue)
-        getProxiesInfo(setProxiesInfo)
         location.reload();
     }
 
