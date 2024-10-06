@@ -31,6 +31,7 @@ const DashboardPage = () => {
     const [stickyValue, setStickyValue] = useState<number>(1);
     const [stickyTimeValue, setStickyTimeValue] = useState<number>(1);
     const [stickyCount, setStickyCount] = useState<number>(2000);
+    const [triggerEffect, setTriggerEffect] = useState(0); 
     const content = []
     
     const timesValues = {
@@ -49,7 +50,7 @@ const DashboardPage = () => {
         getProxiesInfo(setProxiesInfo)
          getProxiesInfo2(setProxiesInfo2)
          getCountrys(setCountrys)
-    }, [])
+    }, [triggerEffect])
     
     const handleUserOrIp = (UserOrIp: string) => {
         setUserOrIp(UserOrIp)
@@ -78,6 +79,7 @@ const DashboardPage = () => {
     const handleGbAdd = () => {
 
         AddOrRemoveGB('add', gbValue)
+        setTriggerEffect(prev => prev + 1);
         location.reload();
     }
 
