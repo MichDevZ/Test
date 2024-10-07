@@ -57,23 +57,9 @@ const DashboardPage = () => {
 
 
 
-
-
     const handleGbAdd = () => {
         AddOrRemoveGB('add', gbValue)
         location.reload();
-    }
-
-    const handleAddWhiteList = (ip: string) => {
-        const regex = /^\d\.\d\.\d\.\d$/;
-
-        if (regex.test(ip)) {
-            AddWhiteList(ip)
-            return <p >{ip}</p>
-        } else {
-            return <h1>No valid</h1>
-        }
-
     }
 
     const usedPercentage  = (proxiesInfo?.proxies.bandwidthLeft! / proxiesInfo?.proxies.bandwidth!) * 100 ; // Percentage used
@@ -96,7 +82,7 @@ const DashboardPage = () => {
   return (
     <>
     <SideBar />
-    <div className="p-4 sm:ml-64">
+    <div  className="p-4 sm:ml-64">
    <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg">
       <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-10  mb-4">
 
