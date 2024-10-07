@@ -5,7 +5,9 @@ export interface proxiesInfo{
         password: string,
         username: string
     },
-    white_list: []
+    whitelist_proxies: {
+        mix: []
+    }
 }
 
 export interface proxiesInfo2{

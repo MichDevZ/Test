@@ -7,7 +7,9 @@ interface proxiesInfo{
         password: string,
         username: string
     },
-    white_list: []
+    whitelist_proxies: {
+        mix: []
+    }
 }
 
 

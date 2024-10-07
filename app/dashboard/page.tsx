@@ -104,6 +104,8 @@ const DashboardPage = () => {
         
     } 
 
+    console.log(proxiesInfo?.whitelist_proxies)
+
   return (
     <>
     <SideBar />
@@ -186,7 +188,7 @@ const DashboardPage = () => {
 
   </div>
 
-        <div className='md:ml-10 my-5 md:my-0 ml-10 '>
+        <div className='md:ml-10 my-5 md:my-0 ml-16 '>
             <div className='flex mb-2 items-center'>
                 <div className='border bg-white rounded-full p-1 mr-2'></div>
                 <p className='text-xs text-gray-500'>Used Bandwidth</p>
@@ -204,14 +206,16 @@ const DashboardPage = () => {
                 )}
             </div>
 
-        <div className='my-2 ml-4'>
-            <div className='flex md:block gap-x-5 my-6 md:my-0'>
-            <p className='text-sm mb-1 font-bold text-nowrap md:-ml-0 -ml-6'>Add Bandwidth</p>
+        <div className='md:flex my-2 ml-12 md:ml-0 '>
+            <div className='md:flex md:items-center my-6 md:my-0'>
+            <p className='text-sm mb-1 font-bold text-nowrap md:-ml-0 mr-2'>Add Bandwidth</p>
+                <div className='flex '>
             <input type="number" defaultValue={gbValue} onChange={(e) => setGbValue(Number(e.target.value))} className="flex-grow p-1 border-none outline-none w-20 h-6" />
             <span className="md:ml-2 text-blue-600 font-bold">GB</span>
             </div>
 
-            <button onClick={handleGbAdd} className='text-white text-nowrap text-sm bg-blue-500 ml-14 px-4 py-1 rounded-full'>{'Add >'}</button>
+            <button onClick={handleGbAdd} className='text-white my-2 md:my-0 text-nowrap text-sm bg-blue-500 ml-3 md:ml-2  px-4 py-1  rounded-full'>{'Add >'}</button>
+            </div>
         </div>
 
         </div>
@@ -245,7 +249,9 @@ const DashboardPage = () => {
                 </ul>
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-x-20 my-5 md:my-10 px-5'>
+                {userOrIP === 'User' ? (
+                    <div key={"user"}>
+            <div  className='grid grid-cols-1 md:grid-cols-2 gap-x-20 my-5 md:my-10 px-5'>
                 <div>
                     <p className='text-xs mb-1 text-gray-400'>Username</p>
                          <div className='flex flex-grow w-[300px]'>
@@ -279,10 +285,41 @@ const DashboardPage = () => {
                 <button className='text-white font-bold text-sm rounded-lg px-4 py-2 bg-blue-600'>{'API Generator >'}
                 </button>
             </div>
+            </div>
+                )  : (
+                        <div key={'IP'}>
+                    <div  className='grid grid-cols-1  gap-x-20 my-5 md:my-10 px-5'>
+                    <div>
+                        <p className='text-xs mb-1 text-gray-400'>Whitelist IP</p>
+                             <div className='flex flex-grow w-[300px]'>
+                                <input type="text"  placeholder='Enter IP address here' className="flex-grow p-1 border-none outline-none w-72 h-9 mr-10" />
+                                <button className='text-white font-bold text-nowrap text-sm rounded-lg px-4 py-2 bg-blue-600'>{'Add >'}</button>
+                          </div>
+                    </div>
+    
+                    <div>
+                        <p className='text-xs overflow-visible mb-1 my-6 text-gray-400'>Country</p>
+                        <select className='absolute z-[1]' name="" id="">
+                            {countrys?.country_list.map(country => (
+                                <option key={country.country_code} value={country.country_code}>{country.country_name}</option>
+                            ))}
+                        </select>
+                    </div>
+    
+    
+                </div>
+    
+                <div className='flex justify-between p-5'>
+                    <button className='text-white font-bold text-sm rounded-lg px-4 py-2 bg-blue-600'>{'API Generator >'}
+                    </button>
+                    <button className='text-white font-bold text-sm rounded-lg px-4 py-2 bg-blue-600'>{'API Generator >'}
+                    </button>
+                </div>
+                </div>
+                ) }
+
 
          </div>
-
-
 
          <div className="rounded bg-gray-50 h-auto ">
             <div className='w-full align-top'>
@@ -291,8 +328,9 @@ const DashboardPage = () => {
                         <button className='text-gray-600'>Proxy</button>
                     </li>
                 </ul>
-            </div>
-
+            </div>          
+            {userOrIP === 'User' ? (
+                <div key={"user"}>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-x-1 my-5 md:my-10 px-5'>
                 <div className='mb-5 md:mb-0'>
                     <p className='text-xs mb-1 text-gray-400'>Host</p>
@@ -358,6 +396,20 @@ const DashboardPage = () => {
                     ))}
                 </div>
             </div>
+            </div>
+            ) : (
+                <div key={'IP'}>
+                <div className='p-5'>
+                <div className='w-full h-72 p-2 border overflow-scroll text-nowrap'>
+                    {proxiesInfo?.whitelist_proxies.mix.map(c => (
+                        <p key={c}>{c}</p>
+                    ))}
+                </div>
+            </div>
+            </div>
+            )}
+
+
 
           </div>
 
