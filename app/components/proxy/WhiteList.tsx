@@ -24,7 +24,7 @@ const WhiteList: FC <Props> = ({countrys, whitelist, handleRefresh}) => {
 
         }
 
-        if (regex.test(ip)) {
+        if (regex.test(ip) && whitelist.length < 2) {
             AddWhiteList(ip, action)
             handleRefresh(true)
             setWhiteIp('')
