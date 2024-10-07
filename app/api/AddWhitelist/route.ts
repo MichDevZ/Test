@@ -5,12 +5,12 @@ export async function POST(req: NextRequest) {
 
     const {ip} = await req.json();
 
+    console.log(ip)
 
      const planId = '6701ad75555cd2019306c5f3'
     const apiKey = '65ytl2m8te5r82y2a6u866x85del551p'
     const url = `https://resell.lightningproxies.net/api/plan/ipv6/add/whitelist/${planId}/${ip}`
 
-    console.log()
 
     try {
         const {data} = await axios.post(url, null,

@@ -239,7 +239,7 @@ const DashboardPage = () => {
                 {userOrIP === 'User' ? (
                     <UserPass proxiesInfo={proxiesInfo!} countrys={countrys} />
                 )  : (
-                       <WhiteList countrys={countrys} />
+                       <WhiteList countrys={countrys} whitelist={proxiesInfo2?.whitelist!} />
                 ) }
 
 

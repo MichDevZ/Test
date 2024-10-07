@@ -3,10 +3,9 @@ import axios from "axios";
 export const AddWhiteList = async  (ip: string)  => {
 
     try {
-        const {data} = await axios.post('api/AddOrRemoveGB', {
+        const {data} = await axios.post('api/AddWhitelist', {
                 ip: ip,
         });
-
 
         return data
         
