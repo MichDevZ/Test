@@ -6,8 +6,6 @@ import { ICountry2, proxiesInfo, proxiesInfo2 } from '../api/interface/proxiesIn
 import { getProxiesInfo2 } from '../api/getProxiesInfo2/getProxiesInfo2';
 import { getCountrys } from '../api/getCountrys/getCountry';
 import { AddOrRemoveGB } from '../api/AddOrRemoveGB/AddOrRemoveGB';
-import { generateRandomCode } from '../utils/generateRandom';
-import { AddWhiteList } from '../api/AddWhitelist/AddWhitelist';
 import WhiteList from '../components/proxy/WhiteList';
 import UserPass from '../components/proxy/UserPass';
 import ProxyUserPass from '../components/proxy/ProxyUserPass';
@@ -32,7 +30,8 @@ const DashboardPage = () => {
     const [proxiesInfo2, setProxiesInfo2] = useState<proxiesInfo2 >();
     const [countrys, setCountrys] = useState<ICountry2>();
     const [gbValue, setGbValue] = useState<number>(0)
-
+    const [hadToRefresh, setHadToRefresh] = useState<boolean>(false)
+    
 
 
     const dateStr = proxiesInfo2?.expiration_date
@@ -46,10 +45,10 @@ const DashboardPage = () => {
             await getProxiesInfo(setProxiesInfo)
              await getProxiesInfo2(setProxiesInfo2)
              await getCountrys(setCountrys)
-
+             setHadToRefresh(false)
         }
          fecthData();
-    }, [])
+    }, [hadToRefresh])
     
     const handleUserOrIp = (UserOrIp: string) => {
         setUserOrIp(UserOrIp)
@@ -225,7 +224,7 @@ const DashboardPage = () => {
                 {userOrIP === 'User' ? (
                     <UserPass proxiesInfo={proxiesInfo!} countrys={countrys} />
                 )  : (
-                       <WhiteList countrys={countrys} whitelist={proxiesInfo2?.whitelist!} />
+                       <WhiteList countrys={countrys} whitelist={proxiesInfo2?.whitelist!} handleRefresh={setHadToRefresh} />
                 ) }
 
 

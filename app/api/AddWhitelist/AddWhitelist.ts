@@ -1,13 +1,15 @@
 import axios from "axios";
 
-export const AddWhiteList = async  (ip: string)  => {
+export const AddWhiteList = async  (ip: string, action: string)  => {
 
     try {
         const {data} = await axios.post('api/AddWhitelist', {
                 ip: ip,
+                action: action
         });
 
-        return data
+
+        return Response.json(data)
         
     } catch (error) {
         console.error(error); 

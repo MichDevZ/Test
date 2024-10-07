@@ -6,19 +6,21 @@ import React, { FC, useState } from 'react'
 interface Props {
     countrys: ICountry2 | undefined,
     whitelist: []
+    handleRefresh: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const WhiteList: FC <Props> = ({countrys, whitelist}) => {
+const WhiteList: FC <Props> = ({countrys, whitelist, handleRefresh}) => {
 
     const [whiteIp, setWhiteIp] = useState<string>('');
     const [validIp, setValidIp] = useState<boolean>(true)
 
-    const handleAddWhiteList = (ip: string) => {
+    const handleAddWhiteList = (ip: string, action: string) => {
         const regex = /^\d\.\d\.\d\.\d$/;
 
         if (regex.test(ip)) {
-            AddWhiteList(ip)
-            location.reload();
+            AddWhiteList(ip, action)
+            handleRefresh(true)
+            setWhiteIp('')
         } else {
             setValidIp(false)
         }
@@ -35,7 +37,7 @@ const WhiteList: FC <Props> = ({countrys, whitelist}) => {
 
         <div key={white} className='flex rounded-full mb-3 p-1 w-24 bg-blue-700 text-white'>
             <p className='ml-2'>{white}</p>
-            <button className='ml-1'>
+            <button onClick={(e) => handleAddWhiteList(white, 'remove')} className='ml-1'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
@@ -48,7 +50,7 @@ const WhiteList: FC <Props> = ({countrys, whitelist}) => {
         <p className='text-xs mb-1 text-gray-400'>Whitelist IP</p>
              <div className='flex flex-grow w-[300px]'>
                 <input type="text" value={whiteIp} onChange={(e) => setWhiteIp(e.target.value)} placeholder='Enter IP address here' className="flex-grow p-1 border-none outline-none w-64 md:w-72 h-9 mr-3 md:mr-3" />
-                <button onClick={() => handleAddWhiteList(whiteIp)} className='text-white font-bold text-nowrap text-sm rounded-lg px-3 md:px-4 md:py-2 bg-blue-600'>{'Add >'}</button>
+                <button onClick={() => handleAddWhiteList(whiteIp, 'add')} className='text-white font-bold text-nowrap text-sm rounded-lg px-3 md:px-4 md:py-2 bg-blue-600'>{'Add >'}</button>
           </div>
     </div>
 
