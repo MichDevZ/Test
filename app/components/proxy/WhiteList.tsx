@@ -47,7 +47,7 @@ const WhiteList: FC <Props> = ({countrys, whitelist}) => {
     <div>
         <p className='text-xs mb-1 text-gray-400'>Whitelist IP</p>
              <div className='flex flex-grow w-[300px]'>
-                <input type="text" value={whiteIp} onChange={(e) => setWhiteIp(e.target.value)} placeholder='Enter IP address here' className="flex-grow p-1 border-none outline-none w-72 h-9 mr-10" />
+                <input type="text" value={whiteIp} onChange={(e) => setWhiteIp(e.target.value)} placeholder='Enter IP address here' className="flex-grow p-1 border-none outline-none w-72 h-9 mr-3 md:mr-10" />
                 <button onClick={() => handleAddWhiteList(whiteIp)} className='text-white font-bold text-nowrap text-sm rounded-lg px-4 py-2 bg-blue-600'>{'Add >'}</button>
           </div>
     </div>
