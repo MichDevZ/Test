@@ -8,7 +8,6 @@ export const AddWhiteList = async  (ip: string, action: string)  => {
                 action: action
         });
 
-
         return Response.json(data)
         
     } catch (error) {

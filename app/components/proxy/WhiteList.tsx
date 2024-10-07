@@ -17,10 +17,18 @@ const WhiteList: FC <Props> = ({countrys, whitelist, handleRefresh}) => {
     const handleAddWhiteList = (ip: string, action: string) => {
         const regex = /^\d\.\d\.\d\.\d$/;
 
+        if (whitelist.length >= 2) {
+            whitelist.forEach(w => (
+                AddWhiteList(w, 'remove')
+            ))
+
+        }
+
         if (regex.test(ip)) {
             AddWhiteList(ip, action)
             handleRefresh(true)
             setWhiteIp('')
+            setValidIp(true)
         } else {
             setValidIp(false)
         }

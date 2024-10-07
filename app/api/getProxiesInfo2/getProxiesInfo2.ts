@@ -14,7 +14,6 @@ export const getProxiesInfo2 = async  (handleRequest: React.Dispatch<React.SetSt
 
         handleRequest(data)
         
-
         return data
         
     } catch (error) {
