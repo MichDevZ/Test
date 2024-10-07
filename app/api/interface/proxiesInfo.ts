@@ -28,3 +28,9 @@ export interface ICountry {
 export interface ICountry2 {
     country_list: ICountry[]
 }
+
+
+export interface IPlanBandwidth {
+    gb: number,
+    price: number,
+}
