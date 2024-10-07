@@ -18,7 +18,7 @@ const WhiteList: FC <Props> = ({countrys, whitelist, handleRefresh}) => {
         const regex = /^\d\.\d\.\d\.\d$/;
 
         if (whitelist.length >= 2) {
-            whitelist.forEach(w => (
+            whitelist.map(w => (
                 AddWhiteList(w, 'remove')
             ))
 
